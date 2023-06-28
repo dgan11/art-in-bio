@@ -21,7 +21,7 @@ export function RenderStaticLayout({ html }) {
     ) {
       pageName = splitHost[0];
       if (pageName) {
-        const pusher = new Pusher(process.env.PUSHER_APP_KEY, {
+        const pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_APP_KEY, {
           cluster: "us3"
         });
         const channel = pusher.subscribe(pageName);
