@@ -11,7 +11,7 @@ export default async (req, res) => {
     cookies: { token, linkToken }
   } = req;
 
-  // console.log('🦷 1 client: ', client)
+  // console.log('🦷 1 client: ', client) //
   // console.log('🦷 2 get-page.ts | query: ', req.query, req.cookies)
 
   if (!page) {
