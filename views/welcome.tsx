@@ -30,10 +30,15 @@ export function Welcome() {
           return;
         }
         if (res.status === 404) {
-          // Note trying to test this locally and had trouble. So trying it live with a different domain.
-          // window.location.href = `https://${pageToSearch}.static.fun`;
-          // window.location.href = `http://${pageToSearch}.lvh.me:3000`;
-          window.location.href = `https://${pageToSearch}.artin.bio`;
+          const { host } = window.location;
+          // set isDev if host include localhost or lvh.me
+          const isDev = host.includes('localhost') || host.includes('lvh.me');
+          if (isDev) {
+            // redirect to lvh.me:port in order to handle subdomains in development
+            window.location.href = `http://${pageToSearch}.lvh.me:3000`;
+          } else {
+            window.location.href = `https://${pageToSearch}.artin.bio`;
+          }
         } else {
           let { message, stack } = await res.json();
           throw new Error(message);

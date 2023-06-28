@@ -33,7 +33,7 @@ export default function EditorContainer({ html, email, editLink }) {
       <style jsx>{`
         .root-editor-container {
           display: flex;
-          height: calc(100% - 50px);
+          height: calc(100% - 500px);
           width: 100%;
           margin: 0;
         }
@@ -83,6 +83,7 @@ function Editor({ html, email, setHtml, setDialogOpen }) {
   }
   return (
     <div>
+      <h1>EDITOR</h1>
       <SaveBar
         setDialogOpen={setDialogOpen}
         html={html}
@@ -92,6 +93,7 @@ function Editor({ html, email, setHtml, setDialogOpen }) {
         setShowEditLink={setShowEditLink}
       />
       <textarea value={html} onChange={onChange} spellCheck={false} />
+      <h1>YOOO</h1>
       <style jsx>{`
         div {
           width: 100%;
@@ -100,7 +102,7 @@ function Editor({ html, email, setHtml, setDialogOpen }) {
         textarea {
           -webkit-appearance: none;
           width: 100%;
-          height: calc(100% - 48px);
+          height: calc(100% - 800px);
           background: #222222;
           color: #fff;
           font-family: Menlo, monospace;
@@ -126,6 +128,7 @@ function Editor({ html, email, setHtml, setDialogOpen }) {
     </div>
   );
 }
+
 
 function OutputContainer({ content }) {
   const iframeRef = useRef<HTMLIFrameElement>();

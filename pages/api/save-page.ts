@@ -6,9 +6,9 @@ import { client } from "../../lib/db";
 const { Get, Match, Index, Update, Create, Collection } = faunadb.query;
 
 const {
-  PUSHER_APP_ID: appId,
-  PUSHER_APP_KEY: key,
-  PUSHER_APP_SECRET: secret
+  NEXT_PUBLIC_PUSHER_APP_ID: appId,
+  NEXT_PUBLIC_PUSHER_APP_KEY: key,
+  NEXT_PUBLIC_PUSHER_APP_SECRET: secret
 } = process.env;
 
 const pusher = new Pusher({
