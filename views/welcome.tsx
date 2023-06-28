@@ -99,8 +99,8 @@ export function Welcome() {
         <div className="welcome">
           <h1>Welcome to</h1>
           <div>
-            <span className="static">static</span>
-            <span className="fun">.fun</span>
+            <span className="static">artin</span>
+            <span className="fun">.bio</span>
           </div>
           <p>
             An{" "}
