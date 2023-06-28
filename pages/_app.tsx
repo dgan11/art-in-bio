@@ -1,9 +1,10 @@
 import type { AppProps } from 'next/app';
+import '../styles/globals.css'
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
-      <style jsx global>{`
+      {/* <style jsx global>{`
         * {
           margin: 0;
           padding: 0;
@@ -21,7 +22,7 @@ export default function App({ Component, pageProps }: AppProps) {
           max-width: 100vw;
           overflow: hidden;
         }
-      `}</style>
+      `}</style> */}
       <Component {...pageProps} />
     </>
   );

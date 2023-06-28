@@ -96,7 +96,7 @@ export function Welcome() {
   return (
     <Div100vh>
       <Head>
-        <title>Static Fun</title>
+        <title>Art In Bio</title>
         <link rel="icon" href="/favicon.ico" type="image/x-icon" />
       </Head>
       <TopBar grayScale={Boolean(pageExists)} />
@@ -145,7 +145,7 @@ export function Welcome() {
         )}
         <div className="emojis" />
         <div className="powered-by">
-          Powered by{"  "}
+          {/* Powered by{"  "}
           <a href="https://nextjs.org" target="_blank">
             Next.js
           </a>
@@ -162,9 +162,11 @@ export function Welcome() {
             Pusher Channels
           </a>
           , and hosted with <a href="https://vercel.com">Vercel</a>
+        </div> */}
+         Created by {"  "} <a href="https://davidgan.xyz" target="_blank">David Gan</a>
         </div>
       </div>
-      <style jsx>{`
+      {/* <style jsx>{`
           .welcome-container {
           display: flex;
           height: calc(100% - 50px);
@@ -278,7 +280,7 @@ export function Welcome() {
         .emojis {
           filter: ${pageExists ? "grayscale(1)" : "none"};
         }
-      `}</style>
+      `}</style> */}
     </Div100vh>
   );
 }

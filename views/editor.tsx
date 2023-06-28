@@ -9,7 +9,7 @@ export function EditorLayout({ html, email, editLink }) {
   return (
     <Div100vh>
       <Head>
-        <title>Static Fun</title>
+        <title>art in bio</title>
         <link rel="icon" href="/favicon.ico" type="image/x-icon" />
       </Head>
       <TopBar info />
