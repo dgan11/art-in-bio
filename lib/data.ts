@@ -36,7 +36,7 @@ async function getPageData(href): Promise<any> {
 }
 
 const defaultMarkup = `
-<h1>Welcome to<br> static.fun!</h1>
+<h1>Welcome to<br>artin.bio!</h1>
 <marquee>hack and be merry <3</marquee>
 <img src="https://media.giphy.com/media/C9x8gX02SnMIoAClXa/giphy.gif" />
 <style>

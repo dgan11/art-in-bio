@@ -26,14 +26,14 @@ export function Welcome() {
 
         if (res.status === 200) {
           setSearchState("ERROR");
-          setPageExists({ name: `${pageToSearch}.static.fun` });
+          setPageExists({ name: `${pageToSearch}.artin.bio` });
           return;
         }
         if (res.status === 404) {
           // Note trying to test this locally and had trouble. So trying it live with a different domain.
           // window.location.href = `https://${pageToSearch}.static.fun`;
-          window.location.href = `http://${pageToSearch}.lvh.me:3000`;
-          // window.location.href = `https://${pageToSearch}.youaretoo.online`;
+          // window.location.href = `http://${pageToSearch}.lvh.me:3000`;
+          window.location.href = `https://${pageToSearch}.artin.bio`;
         } else {
           let { message, stack } = await res.json();
           throw new Error(message);
@@ -127,7 +127,7 @@ export function Welcome() {
             width={180}
             style={{ maxWidth: "40vw" }}
           />
-          <span className="suffix">.static.fun</span>
+          <span className="suffix">.artin.bio</span>
           {renderButton()}
         </form>
         {errorMessage && <p className="error-message">{errorMessage}</p>}

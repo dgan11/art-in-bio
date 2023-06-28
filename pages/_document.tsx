@@ -12,9 +12,9 @@ export default function Document(props) {
         />
         <meta
           property="og:image"
-          content="https://www.static.fun/twitter-card.png"
+          content="https://www.artin.bio/twitter-card.png"
         />
-        <meta property="og:url" content="https://www.static.fun" />
+        <meta property="og:url" content="https://www.artin.bio" />
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
       <body>

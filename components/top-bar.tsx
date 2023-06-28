@@ -10,7 +10,7 @@ export default function TopBar({
   return (
     <div className="top-bar-container">
       <div className="logo-and-info">
-        <a href="https://static.fun">
+        <a href="https://artin.bio">
           <h2>
             <span className="static">static</span>
             <span className="fun">.fun</span>
