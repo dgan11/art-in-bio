@@ -339,11 +339,11 @@ function Configure() {
     setAlbums(newAlbums);
   };
 
-  // const saveConfiguration = (e: FormEvent<HTMLButtonElement>) => {
-  //   e.preventDefault();
-  //   const configuration = { socials, customLinks, artistInfo, albums };
-  //   console.log('📦 save configuration: ', configuration);
-  // };
+  const saveConfiguration = (e: FormEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    const configuration = { socials, customLinks, artistInfo, albums };
+    console.log('📦 save configuration: ', configuration);
+  };
 
   // render a loading spinner or similar while the data is loading
   if (isLoading) {
