@@ -98,7 +98,7 @@ export default function SaveBar({
             fontFamily="Menlo, monospace"
             width={80}
             height={36}
-            bg="#FF0080"
+            bg="#F70D1A"
             fontSize={14}
             onClick={savePage}
           >
@@ -139,7 +139,7 @@ export default function SaveBar({
         .save-bar-container {
           padding: 16px;
           height: 48px;
-          background: #2bbaf8;
+          background: #C2DFFF;
           display: flex;
           align-items: center;
           justify-content: space-between;
@@ -147,7 +147,7 @@ export default function SaveBar({
         .save-bar-container p {
           font-family: Menlo, monospace;
           font-size: 14px;
-          color: white;
+          color: black;
           font-weight: bold;
           cursor: pointer;
         }

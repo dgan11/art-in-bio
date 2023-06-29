@@ -85,7 +85,7 @@ export function Welcome() {
         break;
       default:
         return (
-          <Button bg="#9b51e0" onClick={checkIfPageExists} fontSize={32}>
+          <Button bg="#2554C7" onClick={checkIfPageExists} fontSize={32}>
             →
           </Button>
         );
@@ -102,27 +102,18 @@ export function Welcome() {
       <TopBar grayScale={Boolean(pageExists)} />
       <div className="welcome-container">
         <div className="welcome">
-          <h1>Welcome to</h1>
+          <h1 className="text-lg">Welcome to</h1>
           <div>
             <span className="static">artin</span>
             <span className="fun">.bio</span>
           </div>
-          <p>
-            An{" "}
-            <a href="https://github.com/vercel/static-fun" target="_blank">
-              open source project
-            </a>{" "}
-            to demonstrate Vercel's support of{" "}
-            <a href="https://vercel.com/blog/wildcard-domains" target="_blank">
-              wildcard domains
-            </a>
-          </p>
+          <h2>Build an artist landing page in under a minute. For Free and no sign up needed.</h2>
         </div>
-        <h2>To start go to</h2>
+        <h2>Claim a page</h2>
         <form className="form" onSubmit={checkIfPageExists}>
           <Input
             required
-            color="#9b51e0"
+            color="#2554C7"
             value={pageToSearch}
             onChange={pageSearchInputHandler}
             height={53}
@@ -187,7 +178,7 @@ export function Welcome() {
           font-size: 64px;
         }
         .welcome .static {
-          color: #9b51e0;
+          color: #2554C7;
         }
         .welcome .fun {
           font-family: "Comic Sans", "Comic Sans MS", "Chalkboard",
@@ -242,7 +233,7 @@ export function Welcome() {
         .emojis {
           flex: 0 1 660px;
           width: 100%;
-          background-image: url("/emoji-bg.png");
+          background-image: url("/bg1.png");
           background-repeat: repeat-x;
           background-size: auto 85%;
           background-position: bottom;

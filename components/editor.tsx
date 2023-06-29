@@ -296,7 +296,7 @@ function Editor({ html, config, email, setHtml, setDialogOpen, setConfig }) {
       />
       {/* <textarea className="bg-gray-300" value={html} onChange={onChange} spellCheck={false} /> */}
 
-      <div className="bg-green-300 min-h-screen py-12 px-4 sm:px-6 lg:px-8">
+      <div className="min-h-screen py-4 px-4 sm:px-6 lg:px-8" style={{ background: '#C2DFFF'}}>
       <div className="max-w-md mx-auto">
         <div className="bg-slate-50 py-8 px-4 shadow rounded-lg sm:px-10" onChange={onChange}>
           <h1 className="text-2xl font-bold text-gray-900">Configure your profile</h1>
@@ -427,10 +427,6 @@ function Editor({ html, config, email, setHtml, setDialogOpen, setConfig }) {
               </div>
             ))}
             <button onClick={addAlbum} className="mt-2 text-indigo-600 hover:underline">Add another album</button>
-
-          {/* <div className="mt-4">
-            <button className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-500 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500" onClick={saveConfiguration}>Save Configuration</button>
-          </div> */}
         </div>
       </div>
     </div>

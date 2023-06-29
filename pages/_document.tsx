@@ -16,6 +16,19 @@ export default function Document(props) {
         />
         <meta property="og:url" content="https://www.artin.bio" />
         <meta name="twitter:card" content="summary_large_image" />
+
+        {/* Note: add manifold widgets */}
+        <link rel="stylesheet" href="https://connect.manifoldxyz.dev/2.2.4/connect.css" />
+        <script src="https://connect.manifoldxyz.dev/2.2.4/connect.umd.js" async></script>
+
+        <script src="https://identity.manifoldxyz.dev/2.1.0/walletIdentity.umd.min.js"></script>
+        <link rel="stylesheet" href="https://identity.manifoldxyz.dev/2.1.0/walletIdentity.css" />
+
+        <script src="https://restrictedtoken.manifoldxyz.dev/0.1.0/restrictedToken.umd.min.js"></script>
+        <link rel="stylesheet" href="https://restrictedtoken.manifoldxyz.dev/0.1.0/restrictedToken.css" />
+
+        <link rel="stylesheet" href="https://marketplace.manifoldxyz.dev/3.3.7/marketplace.css" />
+        <script src="https://marketplace.manifoldxyz.dev/3.3.7/marketplace.umd.js" async></script>
       </Head>
       <body>
         <Main />

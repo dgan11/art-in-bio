@@ -18,15 +18,12 @@ export default function TopBar({
         </a>
         {info && (
           <p>
-            is an open source demo to demonstrate Vercel's support of wildcard
-            domains.{"  "}
-            <a href="https://vercel.com/blog/wildcard-domains">Learn More →</a>
+            Build an artist landing page in under a minute. For Free. No sign up needed
           </p>
         )}
       </div>
       <div className="view-source">
-        <a href="https://github.com/vercel/static-fun" target="_blank">
-          <p>VIEW SOURCE</p>
+        <a href="https://github.com/dgan11/art-in-bio" target="_blank">
           <div>
             <GitHub />
           </div>
@@ -36,7 +33,7 @@ export default function TopBar({
         .top-bar-container {
           width: 100%;
           height: 50px;
-          background: #9b51e0;
+          background: #2554C7;
           color: #fff;
           font-weight: bold;
           display: flex;

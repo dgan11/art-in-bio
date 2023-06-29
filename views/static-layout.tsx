@@ -12,6 +12,8 @@ import Listing from '../components/blocks/Listing';
 import MiniListing from '../components/blocks/MiniListing';
 import MiniClaim from '../components/blocks/MiniClaim';
 import AlbumComp from '../components/blocks/AlbumComp';
+import SocialLinkButton from '../components/blocks/SocialLinkButton'
+import CustomLinkButton from '../components/blocks/CustomLinkButton'
 
 const socialIcons: {[key: string]: IconType} = {
   instagram: FaInstagram,
@@ -84,7 +86,7 @@ export function RenderStaticLayout({ html, config }) {
   return (
     <>
       <Head>
-        <title>Static Fun</title>
+        <title>{config.artistInfo.name}'s page</title>
         <link rel="icon" href="/favicon.ico" type="image/x-icon" />
       </Head>
       {/* If the newHtml state is set (i.e., if we've received HTML from Pusher), use it, otherwise use the initial HTML */}
@@ -96,17 +98,17 @@ export function RenderStaticLayout({ html, config }) {
         }
       `}</style> */}
 
-      <div className="flex flex-col items-center justify-center bg-gray-100 py-2">
-        <div className="flex flex-col bg-white shadow-md rounded-lg max-w-xl mx-auto p-4">
+      <div className="flex flex-col items-center justify-center py-2">
+        <div className="flex flex-col bg-white shadow-md rounded-lg max-w-lg mx-auto p-4">
 
-        <h1 className="mb-4 text-3xl font-bold">
+        <h1 className="mb-4 text-2xl font-bold text-center">
           {config.artistInfo && config.artistInfo.name ? config.artistInfo.name + "'s Profile" : "Artist's Profile"}
         </h1>
         <img 
-          className='object-cover rounded-md content-center'
+          className='object-cover rounded-md content-center w-64 h-64 mx-auto'
           src={config.artistInfo && config.artistInfo.imageUrl ? config.artistInfo.imageUrl : "default-image-url"} alt={config.artistInfo && config.artistInfo.name ? config.artistInfo.name : "Artist"} 
         />
-        <p className="mt-4">{config.artistInfo && config.artistInfo.description ? config.artistInfo.description : "Artist Description"}</p>
+        <p className="mt-4 text-center">{config.artistInfo && config.artistInfo.description ? config.artistInfo.description : "Artist Description"}</p>
         
 
           {/* <h1 className="mb-4 text-center text-2xl font-bold">{artist}'s Profile</h1> */}
@@ -119,28 +121,12 @@ export function RenderStaticLayout({ html, config }) {
             }
             console.log('-- socialUrl: ', socialUrl)
 
-            return (
-              <a key={index} 
-                href={socialUrl.startsWith('https') ? socialUrl : `https://${socialUrl}`} 
-                target='_blank' 
-                rel='noopener noreferrer' 
-                className="mt-2 text-center flex items-center justify-center px-4 py-2 rounded w-full text-black bg-red-500 hover:bg-blue-600">
-                {React.createElement(socialIcons[social], { className: "mr-2" })}
-                {social.charAt(0).toUpperCase() + social.slice(1)}
-              </a>
-            )
+            return <SocialLinkButton key={index} social={social} socialUrl={socialUrl} socialIcons={socialIcons} />;
           })}
-          {config.customLinks.map((link, index) => (
-            console.log('** link: ', link),
-            <a key={index} 
-              href={link.url.startsWith('https') ? link.url : `https://${link.url}`} 
-              target='_blank' 
-              rel='noopener noreferrer' 
-              className={`mt-2 text-center flex items-center justify-center px-4 py-2 rounded w-full text-black ${link.primary ? 'bg-blue-500 hover:bg-blue-600' : 'bg-gray-500 hover:bg-gray-600'}`}>
-              {React.createElement(customIcons[link.icon], { className: "mr-2" })}
-              {link.text}
-            </a>
-          ))}
+          {config.customLinks.map((link, index) => {
+            console.log('** link: ', link);
+            return <CustomLinkButton key={index} link={link} customIcons={customIcons} />;
+          })}   
 
           {config.albums.map((album, index) => (
             <AlbumComp key={index} album={album} />

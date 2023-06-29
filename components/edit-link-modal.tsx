@@ -78,7 +78,7 @@ export default function EditLinkModal({
       default:
         return (
           <Button
-            bg="#9B51E0"
+            bg="#2554C7"
             disabled={!Boolean(email)}
             fontSize={44}
             onClick={sendEmail}
@@ -139,7 +139,7 @@ export default function EditLinkModal({
         }
         dialog[open] {
           display: flex;
-          background: #f9d749;
+          background: #F9966B;
           border-radius: 6px;
           position: fixed;
           height: 460px;
