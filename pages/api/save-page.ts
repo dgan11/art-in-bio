@@ -18,12 +18,10 @@ const pusher = new Pusher({
   cluster: "us3"
 });
 
-console.log(`📦 pusher: ${pusher}`)
-
 export default async (req, res) => {
   let {
     cookies: { token },
-    body: { email, html },
+    body: { email, html, config },
     headers: { host }
   } = req;
 
@@ -48,6 +46,7 @@ export default async (req, res) => {
           Update(ref, {
             data: {
               html,
+              config,
               email
             }
           })
@@ -78,6 +77,7 @@ export default async (req, res) => {
               data: {
                 sessionId,
                 html,
+                config,
                 email,
                 name: page
               }

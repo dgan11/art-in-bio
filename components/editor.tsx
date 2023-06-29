@@ -6,12 +6,42 @@ import SaveBar from "./save-bar";
 import { FaInstagram, FaTwitter, FaYoutube, FaSpotify, FaTiktok, FaUser , FaAmilia, FaAmazon, FaAngellist, FaAppStoreIos, FaBitcoin, FaDiscord, FaEnvira, FaEtsy, FaFacebook, FaGithub, FaGoodreadsG, FaHackerNews, FaMailchimp, FaReddit, FaBone, FaBomb, FaBook, FaBookmark, FaBowlingBall, FaCar, FaFutbol, FaGuitar  } from "react-icons/fa";
 import { IconType } from 'react-icons';
 
-export default function EditorContainer({ html, email, editLink }) {
+export type Socials = {
+  instagram: string;
+  twitter: string;
+  youtube: string;
+  spotify: string;
+  tiktok: string;
+};
+
+export type CustomLink = {
+  text: string;
+  url: string;
+  primary: boolean;
+  icon: string;
+};
+
+export type Album = {
+  name: string;
+  links: string[];
+};
+
+export type ArtistInfo = {
+  name: string;
+  description: string;
+  imageUrl: string;
+};
+
+const icons: {[key: string]: IconType} = {
+  FaUser , FaAmilia, FaAmazon, FaAngellist, FaAppStoreIos, FaBitcoin, FaDiscord, FaEnvira, FaEtsy, FaFacebook, FaGithub, FaGoodreadsG, FaHackerNews, FaMailchimp, FaReddit, FaBone, FaBomb, FaBook, FaBookmark, FaBowlingBall, FaCar, FaFutbol, FaGuitar,
+}
+
+export default function EditorContainer({ html, email, editLink, config }) {
   const [_html, setHtml] = useState(html || "");
   const [_email, setEmail] = useState(email);
-  const [_config, setConfig] = useState({} as any);
+  const [_config, setConfig] = useState(config || {});
   const [dialogOpen, setDialogOpen] = useState(false);
-  console.log('🍰 editor.tsx component')
+  console.log('🍰🍰🍰🍰 editor.tsx component | config: ', config)
 
   return (
     <div className="root-editor-container">
@@ -26,8 +56,10 @@ export default function EditorContainer({ html, email, editLink }) {
         <Editor
           html={_html}
           email={_email}
+          config={_config}
           setHtml={setHtml}
           setDialogOpen={setDialogOpen}
+          setConfig={setConfig}
         />
       </div>
       <div className="output-container">
@@ -75,122 +107,23 @@ export default function EditorContainer({ html, email, editLink }) {
   );
 }
 
-function Editor({ html, email, setHtml, setDialogOpen }) {
+function Editor({ html, config, email, setHtml, setDialogOpen, setConfig }) {
   const [saveState, setSaveState] = useState('');
+
   const [showEditLink, setShowEditLink] = useState(false);
 
   function onChange(e) {
-    setHtml(e.target.value);
+    e.preventDefault();
+
+    // setHtml(e.target.value);
+    const configuration = { socials, customLinks, artistInfo, albums };
+    setConfig(configuration)
+    console.log('📦 configuration: ', configuration);
+
     if (saveState === "SUCCESS") {
       setSaveState("DEFAULT");
     }
   }
-  return (
-    <div>
-      <SaveBar
-        setDialogOpen={setDialogOpen}
-        html={html}
-        saveState={saveState}
-        setSaveState={setSaveState}
-        showEditLink={showEditLink}
-        setShowEditLink={setShowEditLink}
-      />
-      <textarea className="bg-gray-300" value={html} onChange={onChange} spellCheck={false} />
-      <h1>YOOO</h1>
-      {/* <style jsx>{`
-        div {
-          width: 100%;
-          height: 100%;
-        }
-        textarea {
-          -webkit-appearance: none;
-          width: 100%;
-          height: calc(100% - 800px);
-          background: #222222;
-          color: #fff;
-          font-family: Menlo, monospace;
-          font-size: 16px;
-          padding: 24px;
-          border: none;
-          border-radius: 0;
-          resize: none;
-          -webkit-touch-callout: none;
-          -khtml-user-select: none;
-          -webkit-tap-highlight-color: transparent;
-          -webkit-overflow-scrolling: touch;
-        }
-        @media (max-width: 500px) {
-          textarea {
-            font-size: 12px;
-          }
-          div {
-            z-index: 1000;
-          }
-        }
-      `}</style> */}
-      <Configure />
-    </div>
-  );
-}
-
-
-function OutputContainer({ content }) {
-  const iframeRef = useRef<HTMLIFrameElement>();
-
-  useEffect(() => {
-    updateIframe();
-  }, [content]);
-
-  function updateIframe() {
-    const document = iframeRef.current.contentDocument;
-    const head = document.getElementsByTagName("head")[0];
-    document.body.innerHTML = content || "";
-  }
-
-  return (
-    <iframe ref={iframeRef} title="html-output">
-      <style jsx>{`
-        iframe {
-          height: 100%;
-          width: 100%;
-          border: none;
-        }
-      `}</style>
-    </iframe>
-  );
-}
-
-export type Socials = {
-  instagram: string;
-  twitter: string;
-  youtube: string;
-  spotify: string;
-  tiktok: string;
-};
-
-export type CustomLink = {
-  text: string;
-  url: string;
-  primary: boolean;
-  icon: string;
-};
-
-export type Album = {
-  name: string;
-  links: string[];
-};
-
-export type ArtistInfo = {
-  name: string;
-  description: string;
-  imageUrl: string;
-};
-
-const icons: {[key: string]: IconType} = {
-  FaUser , FaAmilia, FaAmazon, FaAngellist, FaAppStoreIos, FaBitcoin, FaDiscord, FaEnvira, FaEtsy, FaFacebook, FaGithub, FaGoodreadsG, FaHackerNews, FaMailchimp, FaReddit, FaBone, FaBomb, FaBook, FaBookmark, FaBowlingBall, FaCar, FaFutbol, FaGuitar,
-}
-
-function Configure() {
 
   // useRef - value does not change everytime the component re-renders
   const initialSocials = useRef<Socials>({
@@ -339,11 +272,11 @@ function Configure() {
     setAlbums(newAlbums);
   };
 
-  const saveConfiguration = (e: FormEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    const configuration = { socials, customLinks, artistInfo, albums };
-    console.log('📦 save configuration: ', configuration);
-  };
+  // const saveConfiguration = (e: FormEvent<HTMLButtonElement>) => {
+  //   e.preventDefault();
+  //   const configuration = { socials, customLinks, artistInfo, albums };
+  //   console.log('📦 save configuration: ', configuration);
+  // };
 
   // render a loading spinner or similar while the data is loading
   if (isLoading) {
@@ -351,10 +284,21 @@ function Configure() {
   }
 
   return (
-    // <div className="bg-gradient-to-r from-orange-300 via-yellow-200 to-blue-300 min-h-screen py-12 px-4 sm:px-6 lg:px-8">
-    <div className="bg-green-300 min-h-screen py-12 px-4 sm:px-6 lg:px-8">
+    <div>
+      <SaveBar
+        setDialogOpen={setDialogOpen}
+        html={html}
+        config={config}
+        saveState={saveState}
+        setSaveState={setSaveState}
+        showEditLink={showEditLink}
+        setShowEditLink={setShowEditLink}
+      />
+      {/* <textarea className="bg-gray-300" value={html} onChange={onChange} spellCheck={false} /> */}
+
+      <div className="bg-green-300 min-h-screen py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md mx-auto">
-        <div className="bg-slate-50 py-8 px-4 shadow rounded-lg sm:px-10">
+        <div className="bg-slate-50 py-8 px-4 shadow rounded-lg sm:px-10" onChange={onChange}>
           <h1 className="text-2xl font-bold text-gray-900">Configure your profile</h1>
 
           <div className="mt-5">
@@ -484,11 +428,40 @@ function Configure() {
             ))}
             <button onClick={addAlbum} className="mt-2 text-indigo-600 hover:underline">Add another album</button>
 
-          <div className="mt-4">
+          {/* <div className="mt-4">
             <button className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-500 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500" onClick={saveConfiguration}>Save Configuration</button>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
+      
+    </div>
+  );
+}
+
+
+function OutputContainer({ content }) {
+  const iframeRef = useRef<HTMLIFrameElement>();
+
+  useEffect(() => {
+    updateIframe();
+  }, [content]);
+
+  function updateIframe() {
+    const document = iframeRef.current.contentDocument;
+    const head = document.getElementsByTagName("head")[0];
+    document.body.innerHTML = content || "";
+  }
+
+  return (
+    <iframe ref={iframeRef} title="html-output">
+      <style jsx>{`
+        iframe {
+          height: 100%;
+          width: 100%;
+          border: none;
+        }
+      `}</style>
+    </iframe>
   );
 }

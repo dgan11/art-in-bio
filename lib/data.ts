@@ -3,24 +3,25 @@ async function getPageData(href): Promise<any> {
   const { host } = window.location;
   let isDev = host.includes('localhost');
   let splitHost = host.split('.');
-  console.log('👠2 splitHost: ', splitHost)
-
 
   if ((!isDev && splitHost.length === 3) || (isDev && splitHost.length === 2)) {
     let page = splitHost[0];
-    console.log('👠3 page: ', page)
+    console.log('👠2 page: ', page)
 
     if (page === 'www') {
       return null;
     }
     console.log(`gpd 2 -- fetch /api/get-page?page=${page}`)
     let res = await fetch(`/api/get-page?page=${page}`);
+    let resJson = await res.json();
 
-    console.log(`gpd 3 -- res.status: ${res.status}`)
+    console.log(`🦚gpd 3 -- res.status: ${res.status}`)
+    console.log(`🦚gpd 4 -- resJson: ${JSON.stringify(resJson)}`)
 
     if (res.status === 200) {
-      let { html, allowEdit, token } = await res.json();
-      return { html, allowEdit, editLink: `${href}?edit=${token}` };
+      // let { html, config, allowEdit, token } = await res.json();
+      let { html, config, allowEdit, token } = resJson;
+      return { html, config, allowEdit, editLink: `${href}?edit=${token}` };
     }
 
     if (res.status === 404) {

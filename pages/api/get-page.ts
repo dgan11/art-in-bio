@@ -11,9 +11,6 @@ export default async (req, res) => {
     cookies: { token, linkToken }
   } = req;
 
-  // console.log('🦷 1 client: ', client) //
-  // console.log('🦷 2 get-page.ts | query: ', req.query, req.cookies)
-
   if (!page) {
     res.status(400).json({ message: "Bad Request: provide a page to query" });
     return;
@@ -47,7 +44,7 @@ export default async (req, res) => {
   try {
     console.log(`🌈 sessionId: ${sessionId}`)
     let {
-      data: { sessionId: savedPageSessionId, html }
+      data: { sessionId: savedPageSessionId, html, config }
     } = (await client.query(Get(Match(Index("ref_by_name"), page)))) as any;
 
     console.log(`🌈🌈🌈 page: ${page} | sessionId: ${sessionId} | savePageSessionId: ${savedPageSessionId}`)
@@ -55,18 +52,18 @@ export default async (req, res) => {
 
     if (savedPageSessionId === sessionId) {
       console.log('🦷 3 allow edit')
-      res.status(200).json({ html, allowEdit: true, token });
+      res.status(200).json({ html, config, allowEdit: true, token });
       return;
     } else {
       console.log('🦷 3 Do NOT allow edit')
-      res.status(200).json({ html, allowEdit: false, token });
+      res.status(200).json({ html, config, allowEdit: false, token });
       return;
     }
   } catch (error) {
     console.log('🔺 error: ', error)
     if (error.name === "NotFound") {
       console.log('🦷 🦷 🦷 Not Found - 404 - redirect to configuration page')
-      res.status(404).json({ html: null, token });
+      res.status(404).json({ html: null, config: {}, token });
       return;
     }
 

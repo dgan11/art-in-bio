@@ -30,6 +30,7 @@ export default function IndexPage() {
       console.log('~ getPageData(href)', href)
       getPageData(href)
         .then(data => {
+          console.log('🌵🌵🌵 data: ', data)
           if (!data) {
             setPageData(null);
             return;
@@ -39,8 +40,8 @@ export default function IndexPage() {
             setError({ errorCode, stack, message });
             return;
           }
-          let { html, allowEdit, editLink } = data;
-          setPageData({ html, allowEdit, editLink });
+          let { html, config, allowEdit, editLink } = data;
+          setPageData({ html, allowEdit, editLink, config });
           return;
         })
         .catch(e => {
@@ -99,6 +100,7 @@ export default function IndexPage() {
     return (
       <EditorLayout
         html={defaultMarkup}
+        config={{}}
         email={email}
         editLink={pageData.editLink}
       />
@@ -109,6 +111,7 @@ export default function IndexPage() {
     return (
       <EditorLayout
         html={pageData.html}
+        config={pageData.config}
         email={email}
         editLink={pageData.editLink}
       />
@@ -116,7 +119,8 @@ export default function IndexPage() {
   }
 
   if (pageData && pageData.html && !pageData.allowEdit) {
-    return <RenderStaticLayout html={pageData.html} />;
+    console.log('🌊 render static layout')
+    return <RenderStaticLayout html={pageData.html} config={pageData.config} />;
   }
 
   return <Welcome />;

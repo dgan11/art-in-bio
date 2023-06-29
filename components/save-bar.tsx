@@ -6,6 +6,7 @@ import ms from "ms";
 export default function SaveBar({
   setDialogOpen,
   html,
+  config,
   saveState,
   setSaveState,
   showEditLink,
@@ -24,7 +25,9 @@ export default function SaveBar({
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({ html })
+        // HERE
+        // body: JSON.stringify({ html })
+        body: JSON.stringify({ html, config })
       });
       if (res.ok) {
         setSaveState("SUCCESS");

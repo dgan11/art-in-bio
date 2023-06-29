@@ -96,7 +96,7 @@ export function Welcome() {
   return (
     <Div100vh>
       <Head>
-        <title>Art In Bio</title>
+        <title>artin.bio</title>
         <link rel="icon" href="/favicon.ico" type="image/x-icon" />
       </Head>
       <TopBar grayScale={Boolean(pageExists)} />
@@ -163,10 +163,10 @@ export function Welcome() {
           </a>
           , and hosted with <a href="https://vercel.com">Vercel</a>
         </div> */}
-         Created by {"  "} <a href="https://davidgan.xyz" target="_blank">David Gan</a>
+         Created by {"  "} <a href="https://davidgan.xyz" target="_blank">dg</a>
         </div>
       </div>
-      {/* <style jsx>{`
+      <style jsx>{`
           .welcome-container {
           display: flex;
           height: calc(100% - 50px);
@@ -249,7 +249,7 @@ export function Welcome() {
           pointer-events: none;
         }
         .powered-by {
-          padding: 8px;
+          padding: 3px;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -257,7 +257,7 @@ export function Welcome() {
           position: fixed: 
           bottom: 0;
           width: 100%;
-          height: 80px;
+          height: 30px;
           color: white;
           background: #0085ff;
 	}
@@ -280,7 +280,7 @@ export function Welcome() {
         .emojis {
           filter: ${pageExists ? "grayscale(1)" : "none"};
         }
-      `}</style> */}
+      `}</style>
     </Div100vh>
   );
 }

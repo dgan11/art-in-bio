@@ -101,7 +101,7 @@ export default function EditLinkModal({
           </p>
           <hr />
         </div>
-        <div className="email">
+        {/* <div className="email">
           <h2>Enter your email to save the edit link (recommended)</h2>
         </div>
         <div className="email-input-container">
@@ -113,7 +113,7 @@ export default function EditLinkModal({
           />
           {renderEmailButton()}
           {errorMessage && <p className="error-message">{errorMessage}</p>}
-        </div>
+        </div> */}
         {sendingState === "SUCCESS" && (
           <p className="success-messge">
             Email sent successfully! Please check your spam folder if you can't
