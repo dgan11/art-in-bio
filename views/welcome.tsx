@@ -107,7 +107,7 @@ export function Welcome() {
             <span className="static">artin</span>
             <span className="fun">.bio</span>
           </div>
-          <h2>Build an artist landing page in under a minute. For Free and no sign up needed.</h2>
+          <h2>Build an artist landing page in under a minute. For Free. No sign up needed.</h2>
         </div>
         <h2>Claim a page</h2>
         <form className="form" onSubmit={checkIfPageExists}>
