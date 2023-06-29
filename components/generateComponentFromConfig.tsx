@@ -29,6 +29,7 @@ export default function generateComponentFromConfig(config) {
   if (!config.artistInfo?.name) {
     return (<div>Please add an Artist Name</div>)
   }
+  // console.log('🔺🔺🔺🔺 generateComp config: ', config)
   return (
     <div className="flex flex-col items-center justify-center py-2 bg-gray-100">
         <div className="flex flex-col bg-white shadow-md rounded-lg max-w-lg mx-auto p-4">
@@ -67,13 +68,18 @@ export default function generateComponentFromConfig(config) {
           <div className='mt-8 content-center'>
             {/* Manifold Stuff */}
             {/* -- Add Connect Widget -- */}
-            <Connect/>
+            {/* if config.manifoldWidgets.enabled is true */}
+            { config.manifoldWidgets.connectWidget.enabled && <Connect networkId={config.manifoldWidgets.connectWidget.networkId}/>}
 
             {/* ~~ Add Marketplace Widget component ~~ */}
-            <Listing />
+            {/* <Listing /> */}
+            { config.manifoldWidgets.marketplaceWidget.enabled && <Listing networkId={config.manifoldWidgets.marketplaceWidget.networkId} listingId={config.manifoldWidgets.marketplaceWidget.listingId}/>}
 
-            <MiniListing />
-            <MiniClaim />
+            {/* <MiniClaim /> */}
+            { config.manifoldWidgets.miniClaimWidget.enabled &&  <MiniClaim />}
+
+            {/* <MiniListing /> */}
+            { config.manifoldWidgets.miniMarketplaceWidget.enabled &&  <MiniListing />}
           </div>
         </div>
       </div>

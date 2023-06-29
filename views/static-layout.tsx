@@ -103,7 +103,7 @@ export function RenderStaticLayout({ html, config }) {
       `}</style> */}
 
 
-      <div className="flex flex-col items-center justify-center py-2">
+      <div className="flex flex-col items-center justify-center py-2 bg-gray-100 h-screen	">
         <div className="flex flex-col bg-white shadow-md rounded-lg max-w-lg mx-auto p-4">
 
         <h1 className="mb-4 text-2xl font-bold text-center">
@@ -139,14 +139,16 @@ export function RenderStaticLayout({ html, config }) {
 
           <div className='mt-8 content-center'>
             {/* Manifold Stuff */}
-            {/* -- Add Connect Widget -- */}
-            <Connect/>
+            { config.manifoldWidgets.connectWidget.enabled && <Connect networkId={config.manifoldWidgets.connectWidget.networkId}/>}
 
             {/* ~~ Add Marketplace Widget component ~~ */}
-            <Listing />
+            { config.manifoldWidgets.marketplaceWidget.enabled && <Listing networkId={config.manifoldWidgets.marketplaceWidget.networkId} listingId={config.manifoldWidgets.marketplaceWidget.listingId}/>}
 
-            <MiniListing />
-            <MiniClaim />
+            {/* <MiniClaim /> */}
+            { config.manifoldWidgets.miniClaimWidget.enabled &&  <MiniClaim />}
+
+            {/* <MiniListing /> */}
+            { config.manifoldWidgets.miniMarketplaceWidget.enabled &&  <MiniListing />}
           </div>
         </div>
       </div>

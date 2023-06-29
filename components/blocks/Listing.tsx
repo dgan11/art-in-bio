@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
 // a simple listing component
-export default function Listing() {
+export default function Listing({networkId, listingId}) {
 
   // Only added to remove extraneous elements from marketplace-widget
   useEffect(() => {
@@ -32,9 +32,13 @@ export default function Listing() {
   }, []);
 
 
-  return (<div
-    data-widget="m-layout-complete-listing"
-    data-id={449}
-    data-network={5}
-  ></div>)
+  return (
+    <div className="w-full max-w-2xl mx-auto h-auto">
+       <div
+        data-widget="m-layout-complete-listing"
+        data-id={listingId}
+        data-network={networkId}
+      ></div>
+    </div>
+  )
 }

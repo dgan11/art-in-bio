@@ -35,6 +35,24 @@ export type ArtistInfo = {
   imageUrl: string;
 };
 
+export type ManifoldWidgets = {
+  connectWidget: {
+    enabled: boolean;
+    networkId: string;
+  };
+  marketplaceWidget: {
+    enabled: boolean;
+    listingId: string;
+    networkId: string;
+  };
+  miniClaimWidget: {
+    enabled: boolean;
+  };
+  miniMarketplaceWidget: {
+    enabled: boolean;
+  };
+}
+
 const icons: {[key: string]: IconType} = {
   FaUser , FaAmilia, FaAmazon, FaAngellist, FaAppStoreIos, FaBitcoin, FaDiscord, FaEnvira, FaEtsy, FaFacebook, FaGithub, FaGoodreadsG, FaHackerNews, FaMailchimp, FaReddit, FaBone, FaBomb, FaBook, FaBookmark, FaBowlingBall, FaCar, FaFutbol, FaGuitar,
 }
@@ -145,18 +163,38 @@ function Editor({ html, config, email, setHtml, setDialogOpen, setConfig }) {
   const initialCustomLinks = useRef<CustomLink[]>([]);
   const initialAlbums = useRef<Album[]>([]);
 
+  const initialManifoldWidgets = useRef<ManifoldWidgets>({
+    connectWidget: {
+      enabled: false,
+      networkId: '',
+    },
+    marketplaceWidget: {
+      enabled: false,
+      listingId: '',
+      networkId: '',
+    },
+    miniClaimWidget: {
+      enabled: false
+    },
+    miniMarketplaceWidget: {
+      enabled: false
+    },
+  });
+  
+
 
   const [socials, setSocials] = useState<Socials>(() => initialSocials.current);
   const [customLinks, setCustomLinks] = useState<CustomLink[]>(() => initialCustomLinks.current);
   const [artistInfo, setArtistInfo] = useState<ArtistInfo>(() => initialArtistInfo.current);
   const [albums, setAlbums] = useState<Album[]>(() => initialAlbums.current);
+  const [manifoldWidgets, setManifoldWidgets] = useState<ManifoldWidgets>(() => initialManifoldWidgets.current);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const configuration = { socials, customLinks, artistInfo, albums };
+    const configuration = { socials, customLinks, artistInfo, albums, manifoldWidgets};
     setConfig(configuration);
     console.log('📦 configuration: ', configuration);
-  }, [socials, customLinks, artistInfo, albums]); // dependencies
+  }, [socials, customLinks, artistInfo, albums, manifoldWidgets]); // dependencies
 
    // After component mounts (in the browser environment), load saved data from local storage
    useEffect(() => {
@@ -184,6 +222,10 @@ function Editor({ html, config, email, setHtml, setDialogOpen, setConfig }) {
 
         if (config.albums && JSON.stringify(config.albums) !== JSON.stringify(albums)) {
           setAlbums(config.albums);
+        }
+
+        if (config.manifoldWidgets && JSON.stringify(config.manifoldWidgets) !== JSON.stringify(manifoldWidgets)) {
+          setManifoldWidgets(config.manifoldWidgets);
         }
   
         setIsLoading(false);
@@ -269,6 +311,38 @@ function Editor({ html, config, email, setHtml, setDialogOpen, setConfig }) {
     setAlbums(newAlbums);
   };
 
+  // const handleManifoldWidgetChange = (e: ChangeEvent<HTMLInputElement>, widget: keyof ManifoldWidgets, field?: keyof ManifoldWidgets[keyof ManifoldWidgets]) => {
+  //   if (field) {
+  //     setManifoldWidgets({ ...manifoldWidgets, [widget]: { ...manifoldWidgets[widget], [field]: e.target.value } });
+  //   } else {
+  //     setManifoldWidgets({ ...manifoldWidgets, [widget]: { ...manifoldWidgets[widget], enabled: e.target.checked } });
+  //   }
+  // };
+  function handleManifoldWidgetChange(e, widgetName, field = 'enabled') {
+    const isChecked = e.target.checked;
+  
+    if(field === 'enabled'){
+      setManifoldWidgets((prevWidgets) => {
+        return {
+          ...prevWidgets,
+          [widgetName]: {
+            ...prevWidgets[widgetName],
+            enabled: isChecked,
+          },
+        };
+      });
+    } else {
+      // You can also apply the functional update pattern here if necessary.
+      setManifoldWidgets({
+        ...manifoldWidgets,
+        [widgetName]: {
+          ...manifoldWidgets[widgetName],
+          [field]: e.target.value
+        }
+      });
+    }
+  }
+
   // render a loading spinner or similar while the data is loading
   if (isLoading) {
     return <div>Loading...</div>; 
@@ -293,15 +367,15 @@ function Editor({ html, config, email, setHtml, setDialogOpen, setConfig }) {
             <h1 className="text-2xl font-bold text-gray-900">Configure Your Page</h1>
             <p className="mt-2 mb-2 text-red-500">You must hit save to claim your page!</p>
 
-            <div className="mt-5">
+            <div className="mt-5 flex flex-col">
               <label>Artist Name:</label>
               <input type="text" value={artistInfo.name} onChange={(e) => setArtistInfo({...artistInfo, name: e.target.value})} />
             </div>
-            <div className="mt-2">
+            <div className="pt-2 flex flex-col">
               <label>Description:</label>
               <textarea className="pl-2" value={artistInfo.description} onChange={(e) => setArtistInfo({...artistInfo, description: e.target.value})} />
             </div>
-            <div>
+            <div className="pt-2 flex flex-col">
               <label>Profile Image URL:</label>
               <input type="text" value={artistInfo.imageUrl} onChange={(e) => setArtistInfo({...artistInfo, imageUrl: e.target.value})} />
             </div>
@@ -419,75 +493,74 @@ function Editor({ html, config, email, setHtml, setDialogOpen, setConfig }) {
                 </div>
               ))}
               <button onClick={addAlbum} className="mt-2 text-indigo-600 hover:underline">Add another album</button>
+
+              <div>
+                <h2 className='mt-5 text-lg font-bold text-gray-700'>Manifold Widgets</h2>
+                
+                <div className="mt-4">
+                  <label className="block text-sm font-medium text-gray-700">
+                    Connect Widget:
+                  </label>
+                  <input
+                    type="checkbox"
+                    onChange={(e) => handleManifoldWidgetChange(e, 'connectWidget')}
+                    checked={manifoldWidgets.connectWidget.enabled}
+                  />
+                  {manifoldWidgets.connectWidget.enabled &&
+                    <div className="flex flex-col">
+                      <label>networkId:</label>
+                      <input type="text" value={manifoldWidgets.connectWidget.networkId} onChange={(e) => handleManifoldWidgetChange(e, 'connectWidget', 'networkId')} />
+                    </div>
+                  }
+                </div>
+
+                <div className="mt-4">
+                  <label className="block text-sm font-medium text-gray-700">
+                    Marketplace Widget:
+                  </label>
+                  <input
+                    type="checkbox"
+                    onChange={(e) => handleManifoldWidgetChange(e, 'marketplaceWidget')}
+                    checked={manifoldWidgets.marketplaceWidget.enabled}
+                  />
+                  {manifoldWidgets.marketplaceWidget.enabled &&
+                    <div className="flex flex-col">
+                      <label>networkId:</label>
+                      <input type="text" value={manifoldWidgets.marketplaceWidget.networkId} onChange={(e) => handleManifoldWidgetChange(e, 'marketplaceWidget', 'networkId')} />
+                      <label>listingId:</label>
+                      <input type="text" value={manifoldWidgets.marketplaceWidget.listingId} onChange={(e) => handleManifoldWidgetChange(e, 'marketplaceWidget', 'listingId')} />
+                    </div>
+                  }
+                </div>
+
+                <div className="mt-4">
+                  <label className="block text-sm font-medium text-gray-700">
+                    Mini Claim Widget:
+                  </label>
+                  <input
+                    type="checkbox"
+                    onChange={(e) => handleManifoldWidgetChange(e, 'miniClaimWidget')}
+                    checked={manifoldWidgets.miniClaimWidget.enabled}
+                  />
+                </div>
+
+                <div className="mt-4">
+                  <label className="block text-sm font-medium text-gray-700">
+                    Mini Marketplace Widget:
+                  </label>
+                  <input
+                    type="checkbox"
+                    onChange={(e) => handleManifoldWidgetChange(e, 'miniMarketplaceWidget')}
+                    checked={manifoldWidgets.miniMarketplaceWidget.enabled}
+                  />
+                </div>
+              </div>
           </div>
         </div>
       </div>
     </div>
   );
 }
-
-// ==== HTML Output ====
-// function OutputContainer({ content }) {
-//   const iframeRef = useRef<HTMLIFrameElement>();
-
-//   useEffect(() => {
-//     updateIframe();
-//   }, [content]);
-
-//   function updateIframe() {
-//     const document = iframeRef.current.contentDocument;
-//     const head = document.getElementsByTagName("head")[0];
-//     document.body.innerHTML = content || "";
-//   }
-
-//   return (
-//     <iframe ref={iframeRef} title="html-output">
-//       <div>
-//         <h1>yooooo</h1>
-//       </div>
-//       <style jsx>{`
-//         iframe {
-//           height: 100%;
-//           width: 100%;
-//           border: none;
-//         }
-//       `}</style>
-//     </iframe>
-//   );
-// }
-// ==== HTML Output ====
-
-
-// function OutputContainer({ config }) {
-//   const iframeRef = useRef<HTMLIFrameElement>(null);
-
-//   useEffect(() => {
-//     if (!iframeRef.current) return;
-//     const iframe = iframeRef.current;
-//     const doc = iframe.contentDocument;
-//     const container = doc.createElement('div');
-
-//     const tailwindLink = doc.createElement('link');
-//     tailwindLink.href = 'https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css'; 
-//     tailwindLink.rel = 'stylesheet';
-//     doc.head.appendChild(tailwindLink);
-
-
-//     doc.body.appendChild(container);
-
-//     const content = generateComponentFromConfig(config); 
-
-//     ReactDOM.render(content, container);
-
-//     return () => {
-//       ReactDOM.unmountComponentAtNode(container);
-//     };
-//   }, [config]); // pass config as a dependency here
-
-//   return (
-//     <iframe title="react-output" ref={iframeRef} className="h-full w-full border-0"/>
-//   );
-// }
 
 function OutputContainer({ config }) {
   const component = generateComponentFromConfig(config);
