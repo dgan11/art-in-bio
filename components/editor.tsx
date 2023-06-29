@@ -96,7 +96,6 @@ export default function EditorContainer({ html, email, editLink, config }) {
           width: 100%;
           -webkit-overflow-scrolling: touch;
           overflow-y: scroll;
-          font-size: 0;
         }
         @media (max-width: 500px) {
           .root-editor-container {
@@ -291,7 +290,7 @@ function Editor({ html, config, email, setHtml, setDialogOpen, setConfig }) {
       <div className="min-h-screen py-4 px-4 sm:px-6 lg:px-8" style={{ background: '#C2DFFF'}}>
         <div className="max-w-md mx-auto">
           <div className="bg-slate-50 py-8 px-4 shadow rounded-lg sm:px-10" onChange={onChange}>
-            <h1 className="text-2xl font-bold text-gray-900">Configure your profile</h1>
+            <h1 className="text-2xl font-bold text-gray-900">Configure Your Page</h1>
             <p className="mt-2 mb-2 text-red-500">You must hit save to claim your page!</p>
 
             <div className="mt-5">
@@ -459,33 +458,43 @@ function Editor({ html, config, email, setHtml, setDialogOpen, setConfig }) {
 // ==== HTML Output ====
 
 
+// function OutputContainer({ config }) {
+//   const iframeRef = useRef<HTMLIFrameElement>(null);
+
+//   useEffect(() => {
+//     if (!iframeRef.current) return;
+//     const iframe = iframeRef.current;
+//     const doc = iframe.contentDocument;
+//     const container = doc.createElement('div');
+
+//     const tailwindLink = doc.createElement('link');
+//     tailwindLink.href = 'https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css'; 
+//     tailwindLink.rel = 'stylesheet';
+//     doc.head.appendChild(tailwindLink);
+
+
+//     doc.body.appendChild(container);
+
+//     const content = generateComponentFromConfig(config); 
+
+//     ReactDOM.render(content, container);
+
+//     return () => {
+//       ReactDOM.unmountComponentAtNode(container);
+//     };
+//   }, [config]); // pass config as a dependency here
+
+//   return (
+//     <iframe title="react-output" ref={iframeRef} className="h-full w-full border-0"/>
+//   );
+// }
+
 function OutputContainer({ config }) {
-  const iframeRef = useRef<HTMLIFrameElement>(null);
-
-  useEffect(() => {
-    if (!iframeRef.current) return;
-    const iframe = iframeRef.current;
-    const doc = iframe.contentDocument;
-    const container = doc.createElement('div');
-
-    const link = doc.createElement('link');
-    // replace with your own Tailwind CSS link if you have customized your config
-    link.href = 'https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css'; 
-    link.rel = 'stylesheet';
-    doc.head.appendChild(link);
-
-    doc.body.appendChild(container);
-
-    const content = generateComponentFromConfig(config); 
-
-    ReactDOM.render(content, container);
-
-    return () => {
-      ReactDOM.unmountComponentAtNode(container);
-    };
-  }, [config]); // pass config as a dependency here
-
+  const component = generateComponentFromConfig(config);
+  
   return (
-    <iframe title="react-output" ref={iframeRef} className="h-full w-full border-0"/>
+    <div className="h-full w-full border-0">
+      {component}
+    </div>
   );
 }
