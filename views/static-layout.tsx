@@ -79,9 +79,13 @@ export function RenderStaticLayout({ html, config }) {
 
   if (!config) {
     return <div>Loading...</div>
+  } 
+  // check if config is an empty array
+  else if (Object.keys(config).length === 0 && config.constructor === Object) {
+    return <h1>Misconfigured Config, likely empty</h1>
   }
 
-  console.log('⛄️ config: ', config )
+  console.log('⛄️ config: ', JSON.stringify(config) )
 
   return (
     <>
@@ -97,6 +101,7 @@ export function RenderStaticLayout({ html, config }) {
           height: 100%;
         }
       `}</style> */}
+
 
       <div className="flex flex-col items-center justify-center py-2">
         <div className="flex flex-col bg-white shadow-md rounded-lg max-w-lg mx-auto p-4">
