@@ -1,10 +1,13 @@
 import React, { useEffect, useRef, useState, ChangeEvent, FormEvent } from "react";
+import ReactDOM from 'react-dom';
 
 import EditLinkModal from "./edit-link-modal";
 import SaveBar from "./save-bar";
 
 import { FaInstagram, FaTwitter, FaYoutube, FaSpotify, FaTiktok, FaUser , FaAmilia, FaAmazon, FaAngellist, FaAppStoreIos, FaBitcoin, FaDiscord, FaEnvira, FaEtsy, FaFacebook, FaGithub, FaGoodreadsG, FaHackerNews, FaMailchimp, FaReddit, FaBone, FaBomb, FaBook, FaBookmark, FaBowlingBall, FaCar, FaFutbol, FaGuitar  } from "react-icons/fa";
 import { IconType } from 'react-icons';
+
+import generateComponentFromConfig from "./generateComponentFromConfig";
 
 export type Socials = {
   instagram: string;
@@ -43,6 +46,12 @@ export default function EditorContainer({ html, email, editLink, config }) {
   const [dialogOpen, setDialogOpen] = useState(false);
   console.log('🍰🍰🍰🍰 editor.tsx component | config: ', config)
 
+
+  useEffect(() => {
+    // setGeneratedComponent(generateComponentFromConfig(config));
+    console.log('👀 _config: ', _config)
+  }, [config, _config]);
+
   return (
     <div className="root-editor-container">
       <EditLinkModal
@@ -63,7 +72,9 @@ export default function EditorContainer({ html, email, editLink, config }) {
         />
       </div>
       <div className="output-container">
-        <OutputContainer content={_html} />
+        {/* <OutputContainer content={_html} /> */}
+        {/* <OutputContainer content={generatedComponent} /> */}
+        <OutputContainer config={_config} />
       </div>
 
       <style jsx>{`
@@ -96,11 +107,7 @@ export default function EditorContainer({ html, email, editLink, config }) {
             height: 50%;
             order: 1;
           }
-          .output-container {
-            flex: 1 0 50%;
-            height: 50%;
-            order: 0;
-          }
+          
         }
       `}</style>
     </div>
@@ -109,16 +116,12 @@ export default function EditorContainer({ html, email, editLink, config }) {
 
 function Editor({ html, config, email, setHtml, setDialogOpen, setConfig }) {
   const [saveState, setSaveState] = useState('');
-
   const [showEditLink, setShowEditLink] = useState(false);
 
   function onChange(e) {
     e.preventDefault();
 
     // setHtml(e.target.value);
-    const configuration = { socials, customLinks, artistInfo, albums };
-    setConfig(configuration)
-    console.log('📦 configuration: ', configuration);
 
     if (saveState === "SUCCESS") {
       setSaveState("DEFAULT");
@@ -149,6 +152,12 @@ function Editor({ html, config, email, setHtml, setDialogOpen, setConfig }) {
   const [artistInfo, setArtistInfo] = useState<ArtistInfo>(() => initialArtistInfo.current);
   const [albums, setAlbums] = useState<Album[]>(() => initialAlbums.current);
   const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const configuration = { socials, customLinks, artistInfo, albums };
+    setConfig(configuration);
+    console.log('📦 configuration: ', configuration);
+  }, [socials, customLinks, artistInfo, albums]); // dependencies
 
    // After component mounts (in the browser environment), load saved data from local storage
    useEffect(() => {
@@ -280,170 +289,203 @@ function Editor({ html, config, email, setHtml, setDialogOpen, setConfig }) {
       {/* <textarea className="bg-gray-300" value={html} onChange={onChange} spellCheck={false} /> */}
 
       <div className="min-h-screen py-4 px-4 sm:px-6 lg:px-8" style={{ background: '#C2DFFF'}}>
-      <div className="max-w-md mx-auto">
-        <div className="bg-slate-50 py-8 px-4 shadow rounded-lg sm:px-10" onChange={onChange}>
-          <h1 className="text-2xl font-bold text-gray-900">Configure your profile</h1>
+        <div className="max-w-md mx-auto">
+          <div className="bg-slate-50 py-8 px-4 shadow rounded-lg sm:px-10" onChange={onChange}>
+            <h1 className="text-2xl font-bold text-gray-900">Configure your profile</h1>
+            <p className="mt-2 mb-2 text-red-500">You must hit save to claim your page!</p>
 
-          <div className="mt-5">
-            <label>Artist Name:</label>
-            <input type="text" value={artistInfo.name} onChange={(e) => setArtistInfo({...artistInfo, name: e.target.value})} />
-          </div>
-          <div className="mt-2">
-            <label>Description:</label>
-            <textarea className="pl-2" value={artistInfo.description} onChange={(e) => setArtistInfo({...artistInfo, description: e.target.value})} />
-          </div>
-          <div>
-            <label>Profile Image URL:</label>
-            <input type="text" value={artistInfo.imageUrl} onChange={(e) => setArtistInfo({...artistInfo, imageUrl: e.target.value})} />
-          </div>
-
-          <h2 className='mt-5 text-lg font-bold text-gray-700'>Social Media Links</h2>
-          {Object.keys(socials).map((social) => (
-            <div key={social} className="mt-4">
-              <label className="block text-sm font-medium text-gray-700">
-                {social.charAt(0).toUpperCase() + social.slice(1)} URL:
-              </label>
-              <div className="mt-1">
-                <input
-                  type="text"
-                  name={social}
-                  value={socials[social as keyof typeof socials]}
-                  onChange={handleSocialChange}
-                  className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
-                />
-              </div>
+            <div className="mt-5">
+              <label>Artist Name:</label>
+              <input type="text" value={artistInfo.name} onChange={(e) => setArtistInfo({...artistInfo, name: e.target.value})} />
             </div>
-          ))}
+            <div className="mt-2">
+              <label>Description:</label>
+              <textarea className="pl-2" value={artistInfo.description} onChange={(e) => setArtistInfo({...artistInfo, description: e.target.value})} />
+            </div>
+            <div>
+              <label>Profile Image URL:</label>
+              <input type="text" value={artistInfo.imageUrl} onChange={(e) => setArtistInfo({...artistInfo, imageUrl: e.target.value})} />
+            </div>
 
-          <h2 className='mt-5 text-lg font-bold text-gray-700'>Custom Links</h2>
-            {customLinks.map((link, index) => (
-              <div key={index} className="mt-4">
-                <div className="border-b border-gray-200 pb-4 mb-4">
-                  <div className="flex justify-between items-center mb-4">
-                    <h3 className="text-sm font-medium text-gray-700">Link #{index + 1}</h3>
-                    <button onClick={() => deleteCustomLink(index)} className="text-red-500 text-sm">Delete</button>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700">
-                      Text:
-                    </label>
-                    <div className="mt-1">
-                      <input
-                        type="text"
-                        name="text"
-                        value={link.text}
-                        onChange={(e) => handleCustomLinkChange(e, index)}
-                        className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
-                      />
-                    </div>
-                  </div>
-                  <div className="mt-4">
-                    <label className="block text-sm font-medium text-gray-700">
-                      URL:
-                    </label>
-                    <div className="mt-1">
-                      <input
-                        type="text"
-                        name="url"
-                        value={link.url}
-                        onChange={(e) => handleCustomLinkChange(e, index)}
-                        className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
-                      />
-                    </div>
-                  </div>
-                  <div className="mt-4">
-                    <label className="block text-sm font-medium text-gray-700">
-                      Primary Call to Action?:
-                    </label>
-                    <div className="mt-1">
-                      <input
-                        type="checkbox"
-                        name="primary"
-                        checked={link.primary}
-                        onChange={(e) => handleCustomLinkChange(e, index)}
-                        className="h-4 w-4 text-indigo-600 border-gray-300 rounded"
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    Icon:
-                    <div>
-                      {Object.keys(icons).map((iconName) => (
-                        <button
-                          key={iconName}
-                          onClick={() => handleIconChange(iconName, index)}
-                          className={link.icon === iconName ? 'bg-yellow-400' : ''}  // highlight selected icon
-                        >
-                          {React.createElement(icons[iconName])}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
+            <h2 className='mt-5 text-lg font-bold text-gray-700'>Social Media Links</h2>
+            {Object.keys(socials).map((social) => (
+              <div key={social} className="mt-4">
+                <label className="block text-sm font-medium text-gray-700">
+                  {social.charAt(0).toUpperCase() + social.slice(1)} URL:
+                </label>
+                <div className="mt-1">
+                  <input
+                    type="text"
+                    name={social}
+                    value={socials[social as keyof typeof socials]}
+                    onChange={handleSocialChange}
+                    className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                  />
                 </div>
               </div>
             ))}
-            <button onClick={addCustomLink} className="mt-2 text-indigo-600 hover:underline">Add Custom Link</button>
 
-          <h2 className='mt-5 text-lg font-bold text-gray-700'>Albums</h2>
-              {albums.map((album, albumIndex) => (
-                <div key={albumIndex} className="mt-4">
+            <h2 className='mt-5 text-lg font-bold text-gray-700'>Custom Links</h2>
+              {customLinks.map((link, index) => (
+                <div key={index} className="mt-4">
                   <div className="border-b border-gray-200 pb-4 mb-4">
                     <div className="flex justify-between items-center mb-4">
-                    <h3 className="text-sm font-medium text-gray-700">Album {albumIndex + 1}</h3>
-                    {albums.length > 1 && <button onClick={() => deleteAlbum(albumIndex)} className="text-xs text-red-500 hover:underline">Delete Album</button>}
-                  </div>
-                  <label htmlFor={`album-name-${albumIndex}`} className="block text-sm font-medium text-gray-700">Name</label>
-                  <input id={`album-name-${albumIndex}`} name={`album-name-${albumIndex}`} type="text" required className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" placeholder="Album Name" value={album.name} onChange={(e) => handleAlbumChange(e, albumIndex, -1)} />
-                  <div className="mt-4">
-                    {album.links.map((link, linkIndex) => (
-                      <div key={linkIndex} className="mb-4">
-                        <div className="flex justify-between items-center mb-1">
-                          <label htmlFor={`album-${albumIndex}-link-${linkIndex}`} className="block text-sm font-medium text-gray-700">Link {linkIndex + 1}</label>
-                          {album.links.length > 1 && <button onClick={() => deleteLinkFromAlbum(albumIndex, linkIndex)} className="text-xs text-red-500 hover:underline">Delete Link</button>}
-                        </div>
-                        <input id={`album-${albumIndex}-link-${linkIndex}`} name={`album-${albumIndex}-link-${linkIndex}`} type="url" required className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" placeholder="https://example.com" value={link} onChange={(e) => handleAlbumChange(e, albumIndex, linkIndex)} />
+                      <h3 className="text-sm font-medium text-gray-700">Link #{index + 1}</h3>
+                      <button onClick={() => deleteCustomLink(index)} className="text-red-500 text-sm">Delete</button>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700">
+                        Text:
+                      </label>
+                      <div className="mt-1">
+                        <input
+                          type="text"
+                          name="text"
+                          value={link.text}
+                          onChange={(e) => handleCustomLinkChange(e, index)}
+                          className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                        />
                       </div>
-                    ))}
-                    <button onClick={() => addLinkToAlbum(albumIndex)} className="mt-2 text-indigo-600 hover:underline">Add another link</button>
+                    </div>
+                    <div className="mt-4">
+                      <label className="block text-sm font-medium text-gray-700">
+                        URL:
+                      </label>
+                      <div className="mt-1">
+                        <input
+                          type="text"
+                          name="url"
+                          value={link.url}
+                          onChange={(e) => handleCustomLinkChange(e, index)}
+                          className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                        />
+                      </div>
+                    </div>
+                    <div className="mt-4">
+                      <label className="block text-sm font-medium text-gray-700">
+                        Primary Call to Action?:
+                      </label>
+                      <div className="mt-1">
+                        <input
+                          type="checkbox"
+                          name="primary"
+                          checked={link.primary}
+                          onChange={(e) => handleCustomLinkChange(e, index)}
+                          className="h-4 w-4 text-indigo-600 border-gray-300 rounded"
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      Icon:
+                      <div>
+                        {Object.keys(icons).map((iconName) => (
+                          <button
+                            key={iconName}
+                            onClick={() => handleIconChange(iconName, index)}
+                            className={link.icon === iconName ? 'bg-yellow-400' : ''}  // highlight selected icon
+                          >
+                            {React.createElement(icons[iconName])}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
-            <button onClick={addAlbum} className="mt-2 text-indigo-600 hover:underline">Add another album</button>
+              ))}
+              <button onClick={addCustomLink} className="mt-2 text-indigo-600 hover:underline">Add Custom Link</button>
+
+            <h2 className='mt-5 text-lg font-bold text-gray-700'>Albums</h2>
+                {albums.map((album, albumIndex) => (
+                  <div key={albumIndex} className="mt-4">
+                    <div className="border-b border-gray-200 pb-4 mb-4">
+                      <div className="flex justify-between items-center mb-4">
+                      <h3 className="text-sm font-medium text-gray-700">Album {albumIndex + 1}</h3>
+                      {albums.length > 1 && <button onClick={() => deleteAlbum(albumIndex)} className="text-xs text-red-500 hover:underline">Delete Album</button>}
+                    </div>
+                    <label htmlFor={`album-name-${albumIndex}`} className="block text-sm font-medium text-gray-700">Name</label>
+                    <input id={`album-name-${albumIndex}`} name={`album-name-${albumIndex}`} type="text" required className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" placeholder="Album Name" value={album.name} onChange={(e) => handleAlbumChange(e, albumIndex, -1)} />
+                    <div className="mt-4">
+                      {album.links.map((link, linkIndex) => (
+                        <div key={linkIndex} className="mb-4">
+                          <div className="flex justify-between items-center mb-1">
+                            <label htmlFor={`album-${albumIndex}-link-${linkIndex}`} className="block text-sm font-medium text-gray-700">Link {linkIndex + 1}</label>
+                            {album.links.length > 1 && <button onClick={() => deleteLinkFromAlbum(albumIndex, linkIndex)} className="text-xs text-red-500 hover:underline">Delete Link</button>}
+                          </div>
+                          <input id={`album-${albumIndex}-link-${linkIndex}`} name={`album-${albumIndex}-link-${linkIndex}`} type="url" required className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" placeholder="https://example.com" value={link} onChange={(e) => handleAlbumChange(e, albumIndex, linkIndex)} />
+                        </div>
+                      ))}
+                      <button onClick={() => addLinkToAlbum(albumIndex)} className="mt-2 text-indigo-600 hover:underline">Add another link</button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+              <button onClick={addAlbum} className="mt-2 text-indigo-600 hover:underline">Add another album</button>
+          </div>
         </div>
       </div>
-    </div>
-      
     </div>
   );
 }
 
+// ==== HTML Output ====
+// function OutputContainer({ content }) {
+//   const iframeRef = useRef<HTMLIFrameElement>();
 
-function OutputContainer({ content }) {
-  const iframeRef = useRef<HTMLIFrameElement>();
+//   useEffect(() => {
+//     updateIframe();
+//   }, [content]);
+
+//   function updateIframe() {
+//     const document = iframeRef.current.contentDocument;
+//     const head = document.getElementsByTagName("head")[0];
+//     document.body.innerHTML = content || "";
+//   }
+
+//   return (
+//     <iframe ref={iframeRef} title="html-output">
+//       <div>
+//         <h1>yooooo</h1>
+//       </div>
+//       <style jsx>{`
+//         iframe {
+//           height: 100%;
+//           width: 100%;
+//           border: none;
+//         }
+//       `}</style>
+//     </iframe>
+//   );
+// }
+// ==== HTML Output ====
+
+
+function OutputContainer({ config }) {
+  const iframeRef = useRef<HTMLIFrameElement>(null);
 
   useEffect(() => {
-    updateIframe();
-  }, [content]);
+    if (!iframeRef.current) return;
+    const iframe = iframeRef.current;
+    const doc = iframe.contentDocument;
+    const container = doc.createElement('div');
 
-  function updateIframe() {
-    const document = iframeRef.current.contentDocument;
-    const head = document.getElementsByTagName("head")[0];
-    document.body.innerHTML = content || "";
-  }
+    const link = doc.createElement('link');
+    // replace with your own Tailwind CSS link if you have customized your config
+    link.href = 'https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css'; 
+    link.rel = 'stylesheet';
+    doc.head.appendChild(link);
+
+    doc.body.appendChild(container);
+
+    const content = generateComponentFromConfig(config); 
+
+    ReactDOM.render(content, container);
+
+    return () => {
+      ReactDOM.unmountComponentAtNode(container);
+    };
+  }, [config]); // pass config as a dependency here
 
   return (
-    <iframe ref={iframeRef} title="html-output">
-      <div>
-        <h1>yooooo</h1>
-      </div>
-      <style jsx>{`
-        iframe {
-          height: 100%;
-          width: 100%;
-          border: none;
-        }
-      `}</style>
-    </iframe>
+    <iframe title="react-output" ref={iframeRef} className="h-full w-full border-0"/>
   );
 }
