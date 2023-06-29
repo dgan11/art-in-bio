@@ -30,10 +30,6 @@ export default function generateComponentFromConfig(config) {
     return (<div>Please add an Artist Name</div>)
   }
   return (
-    // <div>
-    //   <h1>Hello</h1>
-    //   <img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExNXN0cDZtMWF6MXh1bjNyd2R3b3JvdW1zYXI0MXpqcThqbGlqcHB6ciZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/cRsxudwhynjv0if1ey/giphy.gif" />
-    // </div>
     <div className="flex flex-col items-center justify-center py-2 bg-gray-100">
         <div className="flex flex-col bg-white shadow-md rounded-lg max-w-lg mx-auto p-4">
 
