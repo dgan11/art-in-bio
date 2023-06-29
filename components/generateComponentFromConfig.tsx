@@ -20,10 +20,35 @@ const socialIcons: {[key: string]: IconType} = {
   tiktok: FaTiktok,
 };
 
-const customIcons: {[key: string]: IconType} = {
-  FaUser , FaAmilia, FaAmazon, FaAngellist, FaAppStoreIos, FaBitcoin, FaDiscord, FaEnvira, FaEtsy, FaFacebook, FaGithub, FaGoodreadsG, FaHackerNews, FaMailchimp, FaReddit, FaBone, FaBomb, FaBook, FaBookmark, FaBowlingBall, FaCar, FaFutbol, FaGuitar,
-}
+// const customIcons: {[key: string]: IconType} = {
+//   FaUser , FaAmilia, FaAmazon, FaAngellist, FaAppStoreIos, FaBitcoin, FaDiscord, FaEnvira, FaEtsy, FaFacebook, FaGithub, FaGoodreadsG, FaHackerNews, FaMailchimp, FaReddit, FaBone, FaBomb, FaBook, FaBookmark, FaBowlingBall, FaCar, FaFutbol, FaGuitar,
+// }
 
+const customIcons: {[key: string]: IconType} = {
+  FaUser: FaUser, 
+  FaAmilia: FaAmilia,
+  FaAmazon: FaAmazon,
+  FaAngellist: FaAngellist,
+  FaAppStoreIos: FaAppStoreIos,
+  FaBitcoin: FaBitcoin,
+  FaDiscord: FaDiscord,
+  FaEnvira: FaEnvira,
+  FaEtsy: FaEtsy,
+  FaFacebook: FaFacebook,
+  FaGithub: FaGithub,
+  FaGoodreadsG: FaGoodreadsG,
+  FaHackerNews: FaHackerNews,
+  FaMailchimp: FaMailchimp,
+  FaReddit: FaReddit,
+  FaBone: FaBone,
+  FaBomb: FaBomb,
+  FaBook: FaBook,
+  FaBookmark: FaBookmark,
+  FaBowlingBall: FaBowlingBall,
+  FaCar: FaCar,
+  FaFutbol: FaFutbol,
+  FaGuitar: FaGuitar,
+};
 
 export default function generateComponentFromConfig(config) {
   if (!config.artistInfo?.name) {
