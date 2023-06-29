@@ -69,7 +69,7 @@ export default function EditorContainer({ html, email, editLink, config }) {
       <style jsx>{`
         .root-editor-container {
           display: flex;
-          height: calc(100% - 500px);
+          height: calc(100% - 30px);
           width: 100%;
           margin: 0;
         }
@@ -159,26 +159,24 @@ function Editor({ html, config, email, setHtml, setDialogOpen, setConfig }) {
      */
     const hydrate = async () => {
       if (typeof window !== 'undefined') {
-        // console.log('🤝1 get localStorage: ', localStorage.getItem('configuration'))
+        console.log('💦 HYDRATE: ', config)
         // const savedConfiguration = JSON.parse(localStorage.getItem('configuration') || '{}');
 
-        // if (savedConfiguration.artistInfo && JSON.stringify(savedConfiguration.artistInfo) !== JSON.stringify(artistInfo)) {
-        //   setArtistInfo(savedConfiguration.artistInfo);
-        // }
+        if (config.artistInfo && JSON.stringify(config.artistInfo) !== JSON.stringify(artistInfo)) {
+          setArtistInfo(config.artistInfo);
+        }
   
-        // // only set the state if the saved data is different from the initial state
-        // if (savedConfiguration.socials && JSON.stringify(savedConfiguration.socials) !== JSON.stringify(socials)) {
-        //   console.log('🤝2 actually set socials')
-        //   setSocials(savedConfiguration.socials);
-        // }
+        if (config.socials && JSON.stringify(config.socials) !== JSON.stringify(socials)) {
+          setSocials(config.socials);
+        }
     
-        // if (savedConfiguration.customLinks && JSON.stringify(savedConfiguration.customLinks) !== JSON.stringify(customLinks)) {
-        //   setCustomLinks(savedConfiguration.customLinks);
-        // }
+        if (config.customLinks && JSON.stringify(config.customLinks) !== JSON.stringify(customLinks)) {
+          setCustomLinks(config.customLinks);
+        }
 
-        // if (savedConfiguration.albums && JSON.stringify(savedConfiguration.albums) !== JSON.stringify(albums)) {
-        //   setAlbums(savedConfiguration.albums);
-        // }
+        if (config.albums && JSON.stringify(config.albums) !== JSON.stringify(albums)) {
+          setAlbums(config.albums);
+        }
   
         setIsLoading(false);
       }
@@ -186,15 +184,6 @@ function Editor({ html, config, email, setHtml, setDialogOpen, setConfig }) {
   
     hydrate();
   }, []);
-
-  // When the socials or customLinks states change, save the new data to local storage
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      // const configuration = { artistInfo, socials, customLinks, albums };
-      // console.log('👾 configuration to set: ', configuration)
-      // localStorage.setItem('configuration', JSON.stringify(configuration));
-    }
-  }, [artistInfo, socials, customLinks, albums]);
 
   const handleSocialChange = (e: ChangeEvent<HTMLInputElement>) => {
     const name = e.target.name as keyof typeof socials;
@@ -271,12 +260,6 @@ function Editor({ html, config, email, setHtml, setDialogOpen, setConfig }) {
     newAlbums[albumIndex].links.splice(linkIndex, 1);
     setAlbums(newAlbums);
   };
-
-  // const saveConfiguration = (e: FormEvent<HTMLButtonElement>) => {
-  //   e.preventDefault();
-  //   const configuration = { socials, customLinks, artistInfo, albums };
-  //   console.log('📦 save configuration: ', configuration);
-  // };
 
   // render a loading spinner or similar while the data is loading
   if (isLoading) {
@@ -451,6 +434,9 @@ function OutputContainer({ content }) {
 
   return (
     <iframe ref={iframeRef} title="html-output">
+      <div>
+        <h1>yooooo</h1>
+      </div>
       <style jsx>{`
         iframe {
           height: 100%;
