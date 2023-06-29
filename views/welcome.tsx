@@ -109,7 +109,7 @@ export function Welcome() {
           </div>
           <h2>Build an artist landing page in under a minute. For Free. No sign up needed.</h2>
         </div>
-        <h2>Claim a page</h2>
+        <h2 className="cta">Claim a page</h2>
         <form className="form" onSubmit={checkIfPageExists}>
           <Input
             required
@@ -154,7 +154,7 @@ export function Welcome() {
           </a>
           , and hosted with <a href="https://vercel.com">Vercel</a>
         </div> */}
-         Created by {"  "} <a href="https://davidgan.xyz" target="_blank">dg</a>
+         created by {"  "} <a href="https://davidgan.xyz" target="_blank">david gan</a>
         </div>
       </div>
       <style jsx>{`
@@ -172,6 +172,13 @@ export function Welcome() {
           display: flex;
           flex-direction: column;
           justify-content: center;
+        }
+        .welcome h1 {
+          font-size: 28px;
+        }
+        .welcome h2 {
+          margin-top: 16px;
+          font-size: 22px;
         }
         .welcome span {
           font-weight: bold;
@@ -197,6 +204,9 @@ export function Welcome() {
         .welcome a {
           font-weight: bold;
           color: black;
+        }
+        .cta {
+          font-size: 24px;
         }
         .form {
           flex: 0;
