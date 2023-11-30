@@ -1,12 +1,10 @@
 import React from "react";
 
 export default function CustomLinkButton({ link, customIcons }) {
-  console.log('🌈 customIcons[link.icon]: ', customIcons[link.icon])
 
   const IconComponent = customIcons[link.icon];
 
   if (!IconComponent) {
-    console.log(`❌ Icon not found: ${link.icon}`);
     return (
       <a
         href={link.url.startsWith('https') ? link.url : `https://${link.url}`}

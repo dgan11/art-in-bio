@@ -28,7 +28,6 @@ export default function EditLinkModal({
   }, [dialogOpen]);
 
   async function sendEmail() {
-    console.log("sending email to: ", email);
     if (email) {
       setSendingState("SENDING");
       setErrorMessage(null);

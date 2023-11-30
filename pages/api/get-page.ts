@@ -42,27 +42,20 @@ export default async (req, res) => {
   }
 
   try {
-    console.log(`🌈 sessionId: ${sessionId}`)
     let {
       data: { sessionId: savedPageSessionId, html, config }
     } = (await client.query(Get(Match(Index("ref_by_name"), page)))) as any;
 
-    console.log(`🌈🌈🌈 page: ${page} | sessionId: ${sessionId} | savePageSessionId: ${savedPageSessionId}`)
-
 
     if (savedPageSessionId === sessionId) {
-      console.log('🦷 3 allow edit')
       res.status(200).json({ html, config, allowEdit: true, token });
       return;
     } else {
-      console.log('🦷 3 Do NOT allow edit')
       res.status(200).json({ html, config, allowEdit: false, token });
       return;
     }
   } catch (error) {
-    console.log('🔺 error: ', error)
     if (error.name === "NotFound") {
-      console.log('🦷 🦷 🦷 Not Found - 404 - redirect to configuration page')
       res.status(404).json({ html: null, config: {}, token });
       return;
     }
@@ -75,7 +68,6 @@ export default async (req, res) => {
       });
       return;
     } else {
-      console.log('❌ error: ', error)
       console.error({ error });
       res.status(500).json({ stack: error.stack, message: error.message });
       return;

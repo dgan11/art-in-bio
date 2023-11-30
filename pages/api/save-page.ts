@@ -54,7 +54,6 @@ export default async (req, res) => {
       }
 
       try {
-        console.log(`hydrating html for ${page}.artin.bio`);
         await new Promise<void>((resolve, reject) => {
           pusher.trigger(page, "hydrate-html", html, err => {
             if (err) return reject(err);
@@ -71,7 +70,6 @@ export default async (req, res) => {
     } catch (e) {
       if (e.name === "NotFound") {
         try {
-          console.log('🎨 creating a new documnet in pages for name: ', page)
           await client.query(
             Create(Collection("pages"), {
               data: {

@@ -147,21 +147,25 @@ function Editor({ html, config, email, setHtml, setDialogOpen, setConfig }) {
 
   // useRef - value does not change everytime the component re-renders
   const initialSocials = useRef<Socials>({
-    instagram: '',
-    twitter: '',
+    instagram: 'https://www.instagram.com/davidgan__',
+    twitter: 'https://twitter.com/davidgan__',
     youtube: '',
     spotify: '',
-    tiktok: ''
+    tiktok: 'https://www.tiktok.com/@dgan11'
   });
 
   const initialArtistInfo = useRef<ArtistInfo>({
-    name: "",
-    description: "",
-    imageUrl: "",
+    name: "Creator X",
+    description: "Artist and Creator",
+    imageUrl: "https://pbs.twimg.com/profile_images/994592419705274369/RLplF55e_400x400.jpg",
   });
 
-  const initialCustomLinks = useRef<CustomLink[]>([]);
-  const initialAlbums = useRef<Album[]>([]);
+  const initialCustomLinks = useRef<CustomLink[]>([
+    { text: 'my custom link', url: 'https://davidgan.xyz/', primary: true, icon: 'FaUser' },
+  ]);
+  const initialAlbums = useRef<Album[]>([
+    { name: 'Album 1', links: ['https://i.ytimg.com/vi/STiUV6XXG4E/maxresdefault.jpg', 'https://i.ytimg.com/vi/aSQUg-h8G4s/maxresdefault.jpg', 'https://i.ytimg.com/vi/6x_b11Kyrco/hqdefault.jpg'] },
+  ]);
 
   const initialManifoldWidgets = useRef<ManifoldWidgets>({
     connectWidget: {
@@ -174,10 +178,10 @@ function Editor({ html, config, email, setHtml, setDialogOpen, setConfig }) {
       networkId: '',
     },
     miniClaimWidget: {
-      enabled: false
+      enabled: true
     },
     miniMarketplaceWidget: {
-      enabled: false
+      enabled: true
     },
   });
   
@@ -259,7 +263,7 @@ function Editor({ html, config, email, setHtml, setDialogOpen, setConfig }) {
   };
 
   const addCustomLink = () => {
-    setCustomLinks([...customLinks, { text: '', url: '', primary: false, icon: '' }]);
+    setCustomLinks([...customLinks, { text: 'my custom link', url: 'https://davidgan.xyz/', primary: true, icon: 'FaUser' }]);
   };
 
   const deleteCustomLink = (index: number) => {
@@ -434,7 +438,7 @@ function Editor({ html, config, email, setHtml, setDialogOpen, setConfig }) {
                         />
                       </div>
                     </div>
-                    <div className="mt-4">
+                    {/* <div className="mt-4">
                       <label className="block text-sm font-medium text-gray-700">
                         Primary Call to Action?:
                       </label>
@@ -447,7 +451,7 @@ function Editor({ html, config, email, setHtml, setDialogOpen, setConfig }) {
                           className="h-4 w-4 text-indigo-600 border-gray-300 rounded"
                         />
                       </div>
-                    </div>
+                    </div> */}
                     <div>
                       Icon:
                       <div>
@@ -506,15 +510,15 @@ function Editor({ html, config, email, setHtml, setDialogOpen, setConfig }) {
                     onChange={(e) => handleManifoldWidgetChange(e, 'connectWidget')}
                     checked={manifoldWidgets.connectWidget.enabled}
                   />
-                  {manifoldWidgets.connectWidget.enabled &&
+                  {/* {manifoldWidgets.connectWidget.enabled &&
                     <div className="flex flex-col">
                       <label>networkId:</label>
                       <input type="text" value={manifoldWidgets.connectWidget.networkId} onChange={(e) => handleManifoldWidgetChange(e, 'connectWidget', 'networkId')} />
                     </div>
-                  }
+                  } */}
                 </div>
 
-                <div className="mt-4">
+                {/* <div className="mt-4">
                   <label className="block text-sm font-medium text-gray-700">
                     Marketplace Widget:
                   </label>
@@ -531,7 +535,7 @@ function Editor({ html, config, email, setHtml, setDialogOpen, setConfig }) {
                       <input type="text" value={manifoldWidgets.marketplaceWidget.listingId} onChange={(e) => handleManifoldWidgetChange(e, 'marketplaceWidget', 'listingId')} />
                     </div>
                   }
-                </div>
+                </div> */}
 
                 <div className="mt-4">
                   <label className="block text-sm font-medium text-gray-700">

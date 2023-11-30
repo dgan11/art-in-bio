@@ -12,17 +12,13 @@ export function Welcome() {
   const [searchState, setSearchState] = useState("");
   const [errorMessage, setErrorMessage] = useState();
 
-  console.log('👋 welcome.tsx start')
-
   async function checkIfPageExists(e) {
     e.preventDefault();
     if (pageToSearch) {
       setSearchState("SEARCHING");
       try {
-        console.log('👋1 checkIfPageExists start')
 
         let res = await fetch(`/api/get-page?page=${pageToSearch}`);
-        console.log('🤘 1 res.status: ', res.status)
 
         if (res.status === 200) {
           setSearchState("ERROR");

@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 
 // a simple listing component
 export default function Listing({networkId, listingId}) {
-  console.log('💥 listing: ', networkId, listingId)
 
   // Only added to remove extraneous elements from marketplace-widget
   useEffect(() => {

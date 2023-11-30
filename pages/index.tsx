@@ -24,8 +24,6 @@ export default function IndexPage() {
       window.location.href = "/";
     }
 
-    console.log('🥋1 pageData', pageData)
-
     if (!pageData) {
       console.log('~ getPageData(href)', href)
       getPageData(href)
@@ -48,7 +46,6 @@ export default function IndexPage() {
           setError({ message: e.message, stack: e.stack });
         });
     }
-    console.log('🥋2 pageData', pageData)
     return () => {};
   }, [pageData]);
 
@@ -58,7 +55,6 @@ export default function IndexPage() {
   }, []);
 
   if (error) {
-    console.log('❌ error', error)
     return (
       <FixedCenterLayout>
         <div>
@@ -96,7 +92,6 @@ export default function IndexPage() {
   }
 
   if (pageData && pageData.html === null) {
-    console.log('🔥🔥🔥 should get here when redirecting after getting a new subdomain')
     return (
       <EditorLayout
         html={defaultMarkup}
@@ -119,7 +114,6 @@ export default function IndexPage() {
   }
 
   if (pageData && pageData.html && !pageData.allowEdit) {
-    console.log('🌊 render static layout')
     return <RenderStaticLayout html={pageData.html} config={pageData.config} />;
   }
 

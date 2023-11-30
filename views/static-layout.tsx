@@ -85,8 +85,6 @@ export function RenderStaticLayout({ html, config }) {
     return <h1>Misconfigured Config, likely empty</h1>
   }
 
-  console.log('⛄️ config: ', JSON.stringify(config) )
-
   return (
     <>
       <Head>
@@ -124,12 +122,10 @@ export function RenderStaticLayout({ html, config }) {
             if (!socialUrl) {
               return null;
             }
-            console.log('-- socialUrl: ', socialUrl)
 
             return <SocialLinkButton key={index} social={social} socialUrl={socialUrl} socialIcons={socialIcons} />;
           })}
           {config.customLinks.map((link, index) => {
-            console.log('** link: ', link);
             return <CustomLinkButton key={index} link={link} customIcons={customIcons} />;
           })}   
 

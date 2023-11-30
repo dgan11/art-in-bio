@@ -54,7 +54,6 @@ export default function generateComponentFromConfig(config) {
   if (!config.artistInfo?.name) {
     return (<div>Please add an Artist Name</div>)
   }
-  // console.log('🔺🔺🔺🔺 generateComp config: ', config)
   return (
     <div className="flex flex-col items-center justify-center py-2 bg-gray-100">
         <div className="flex flex-col bg-white shadow-md rounded-lg max-w-lg mx-auto p-4">
@@ -77,12 +76,10 @@ export default function generateComponentFromConfig(config) {
             if (!socialUrl) {
               return null;
             }
-            console.log('-- socialUrl: ', socialUrl)
 
             return <SocialLinkButton key={index} social={social} socialUrl={socialUrl} socialIcons={socialIcons} />;
           })}
           {config.customLinks.map((link, index) => {
-            console.log('** link: ', link);
             return <CustomLinkButton key={index} link={link} customIcons={customIcons} />;
           })}   
 
